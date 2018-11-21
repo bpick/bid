@@ -1,0 +1,73 @@
+.chart-section {
+    path {
+        fill: none;
+        stroke-width: 1;
+    }
+
+    path.ohlc {
+        stroke: #000000;
+        stroke-width: 1;
+    }
+
+    path.ohlc.up {
+        fill: $buy-color;
+        stroke: $buy-color;
+    }
+
+    path.ohlc.down {
+        fill: $sell-color;
+        stroke: $sell-color;
+    }
+
+    .ma-0 path.line {
+        stroke: #1f77b4;
+    }
+
+    .ma-1 path.line {
+        stroke: #aec7e8;
+    }
+
+    path.volume {
+        fill: #EEEEEE;
+    }
+
+    .crosshair {
+        cursor: crosshair;
+    }
+
+    .crosshair path.wire {
+        stroke: #DDDDDD;
+        stroke-dasharray: 1, 1;
+    }
+
+    .crosshair .axisannotation path {
+        fill: #DDDDDD;
+    }
+    
+}
+
+
+
+path.candle {
+    stroke: #000000;
+}
+
+path.candle.body {
+    stroke-width: 0;
+}
+
+path.candle.up {
+    fill: $buy-color;
+    stroke: $buy-color;
+}
+
+path.candle.down {
+    fill: $sell-color;
+    stroke: $sell-color;
+}
+
+rect.pane {
+    cursor: move;
+    fill: none;
+    pointer-events: all;
+}

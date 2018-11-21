@@ -1,0 +1,56 @@
+$idea-collector-height: dynamic(26px);
+$idea-collector-height-big: dynamic(20px);
+.x-big {
+    .x-idea {
+        .statistic {
+            .idea-collector {
+                height: $idea-collector-height-big;
+                &::before, &::after {
+                    padding: 0px 4px;
+                }
+            }
+        }
+    }
+}
+.x-idea {
+    .statistic {
+        overflow: auto;
+        .idea-collector {
+            height: $idea-collector-height;
+            background-color: $sell-color;
+            box-sizing: content-box;
+            color: $neutral-light-color;
+            @include border-radius(8px);
+            &::before {
+                content: "B:"attr(data-buy);
+                padding: 4px;
+                width: var(--data-buy);
+                float: left;
+                text-align: right;
+                background-color: $buy-color;
+                @include border-radius(8px 0px 0px 8px);
+            }
+            &::after {
+                content: "S:"attr(data-sell);
+                padding: 4px;
+                width: var(--data-sell);
+                text-align: right;
+                display: inline-block;
+            }
+        }
+
+        .idea-price {
+            display: block;
+            overflow: auto;
+            padding: 4px 0px;
+            .price {
+                &.price-buy {
+                    float: left;
+                }
+                &.price-sell {
+                    float: right;
+                }
+            }
+        }
+    }
+}

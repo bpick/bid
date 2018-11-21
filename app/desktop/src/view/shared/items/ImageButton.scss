@@ -1,0 +1,35 @@
+$image-button-img-size: dynamic(36px);
+$image-button-font-size: dynamic(28px);
+$image-button-text-margin: dynamic(0px 0px 0px 8px);
+.x-image-button {
+    .profile {
+        display: flex;
+        align-items: center;
+        img {
+            width: $image-button-img-size;
+            height: $image-button-img-size;
+            @include border-radius(50%);
+        }
+        .logo {
+            width: $image-button-img-size;
+            height: $image-button-img-size;
+            display: flex;
+            position: relative;
+            align-items: center;
+            text-align: center;
+            align-content: center;
+            background-color: $warning-color;
+            @include border-radius(50%);
+            span {
+                font-size: $image-button-font-size;
+                font-weight: bold;
+                position: absolute;
+                left: 0px;
+                right: 0px;
+            }
+        }
+        .text {
+            margin: $image-button-text-margin;
+        }
+    }
+}

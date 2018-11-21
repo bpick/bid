@@ -1,0 +1,33 @@
+.x-bs-block {
+    .x-innerhtml {
+        height: 100%;
+    }
+    .statistic {
+        height: 100%;
+        .buy {
+            span {
+                background-color: $buy-color;
+            }
+        }
+        .sell {
+            span {
+                background-color: $sell-color;
+            }
+        }
+
+        .buy, .sell {
+            display: flex;
+            flex-shrink: 1;
+            flex-basis: auto;
+            flex-grow: 1;
+            flex-direction: column;
+            span {
+                &.block {
+                    margin: 1px;
+                    flex: 1;
+                    height: 8px;
+                }
+            }
+        }
+    }
+}

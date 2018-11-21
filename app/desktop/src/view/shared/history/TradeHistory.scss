@@ -1,0 +1,35 @@
+.x-trade-history {
+    h2 {
+        margin-top:0px;
+    }
+    .history {
+        padding: 10px;
+        overflow: scroll;
+        max-height: 320px;
+        background-color: transparentize($color: #fff, $amount: 0.9);
+        @include border-radius(8px);
+        .buy {
+            color: $buy-color;
+        }
+        .sell {
+            color: $sell-color;
+        }
+        .buy, .sell {
+            display: flex;
+            flex-direction: row;
+            flex-basis: auto;
+            flex-flow: 1;
+            flex-grow: 1;
+            flex-shrink: 1;
+            span {
+                flex: 1;
+            }
+            span.first {
+                flex: 2;
+            }
+            span:last-child {
+                text-align: right;
+            }
+        }
+    }
+}

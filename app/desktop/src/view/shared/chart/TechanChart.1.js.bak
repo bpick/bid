@@ -1,0 +1,202 @@
+/**
+ * refer http://bl.ocks.org/andredumas/27c4a333b0e0813e093d
+ * gallery: https://github.com/andredumas/techan.js/wiki/Gallery
+ * tooltips: http://bl.ocks.org/shashank2104/a5928e82ef426aabb0103f93a8fb5f0e position is incorrect
+ */
+Ext.define('Bidmo.view.shared.chart.TechanChart', {
+
+        alternateClassName: 'TenchanChart',
+        singleton: true,
+        marginDesktop: { top: 20, right: 100, bottom: 50, left: 20 },
+        margin: { top: 10, right: 10, bottom: 30, left: 30 },
+        setupSize: function (margin) {
+                var tbHeight = 48 * 2;
+                var detailWidth = 200;
+                var detailHeight = 145;
+                var win = window, w, h;
+                var orientation = Ext.Viewport.getOrientation();
+                var deviceType = Ext.os.deviceType;
+                var width = win.innerWidth;
+                var height = win.innerHeight;
+                if(deviceType === 'Desktop') {
+                        w = width - 300;
+                        h = height - 76 - 64;
+                } else {
+                        
+                        if (orientation === 'landscape') {
+                                w = width - detailWidth;
+                                h = height - tbHeight;
+                        } else {
+                                w = width;
+                                h = height - detailHeight - tbHeight;
+                        }
+                }
+                
+
+                width = w - margin.left - margin.right;
+                height = h - margin.top - margin.bottom;
+                return { width: width, height: height };
+        },
+        // sample chart with hardcode position
+        createChart: function (id) {
+                var me = this;
+                var deviceType = Ext.os.deviceType;
+                var margin = me.margin;
+                if(deviceType === 'Desktop') {
+                        margin = me.marginDesktop;
+                }
+                var dataPath = Ext.getResourcePath('data-simple.csv', null, 'data');
+                var size = me.setupSize(margin);
+                var width = size.width;
+                var height = size.height;
+                var parseDate = d3.timeParse("%d-%b-%y");
+
+                var x = techan.scale.financetime()
+                        .range([0, width]);
+                var y = d3.scaleLinear()
+                        .range([height, 0]);
+
+                var candlestick = techan.plot.candlestick()
+                        .xScale(x)
+                        .yScale(y);
+
+                var xAxis = d3.axisBottom()
+                        .scale(x);
+                var yAxis = d3.axisLeft()
+                        .scale(y);
+                var parrentsvg = d3.select(id).append("svg");
+                svg = parrentsvg
+                        .attr("width", width + margin.left + margin.right)
+                        .attr("height", height + margin.top + margin.bottom)
+                        .append("g")
+                        .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+                
+                me.x = x;
+                me.y = y;
+                me.candlestick = candlestick;
+                me.xAxisScale = xAxis;
+                me.yAxisScale = yAxis;
+                me.parrentsvg = parrentsvg;
+                me.svg = svg;
+                d3.csv(dataPath, function (error, data) {
+                        var accessor = candlestick.accessor();
+                        data = data.slice(0, 200).map(function (d) {
+                                return {
+                                        date: parseDate(d.Date),
+                                        open: +d.Open,
+                                        high: +d.High,
+                                        low: +d.Low,
+                                        close: +d.Close,
+                                        volume: +d.Volume
+                                };
+                        }).sort(function (a, b) { return d3.ascending(accessor.d(a), accessor.d(b)); });
+
+                        svg.append("g")
+                                .attr("class", "candlestick");
+
+                        me.xAxis = svg.append("g")
+                                .attr("class", "x axis")
+                                .attr("transform", "translate(0," + height + ")");
+
+                        me.yAxis = svg.append("g")
+                                .attr("class", "y axis")
+                                .append("text")
+                                .attr("transform", "rotate(-90)")
+                                .attr("y", 6)
+                                .attr("dy", ".71em")
+                                .style("text-anchor", "end");
+                                //.text("Price ($)");
+
+                        me.draw(svg, candlestick, x, y, xAxis, yAxis, data);
+                        me.drawedChart = true;
+                });
+
+
+        },
+        draw: function (svg, candlestick, x, y, xAxis, yAxis, data) {
+
+                x.domain(data.map(candlestick.accessor().d));
+                y.domain(techan.scale.plot.ohlc(data, candlestick.accessor()).domain());
+
+                svg.selectAll("g.candlestick").datum(data).call(candlestick);
+                svg.selectAll("g.x.axis").call(xAxis);
+                svg.selectAll("g.y.axis").call(yAxis);
+        },
+        resizeChart: function () {
+                var me = this;
+                if (!me.drawedChart) {
+                        return false;
+                }
+                var deviceType = Ext.os.deviceType;
+                var margin = me.margin;
+                if(deviceType === 'Desktop') {
+                        margin = me.marginDesktop;
+                }
+                var size = me.setupSize(margin);
+                var width = size.width;
+                var height = size.height;
+                var svg = svg || me.svg,
+                        parrentsvg = me.parrentsvg,
+                        candlestick = candlestick || me.candlestick,
+                        x = x || me.x,
+                        y = y || me.y,
+                        xAxisScale = xAxisScale || me.xAxisScale,
+                        yAxisScale = yAxisScale || me.yAxisScale;
+
+                me.x = x = techan.scale.financetime()
+                        .range([0, width]);
+                me.y = y = d3.scaleLinear()
+                        .range([height, 0]);
+
+                me.candlestick = candlestick = techan.plot.candlestick()
+                        .xScale(x)
+                        .yScale(y);
+
+                me.xAxisScale = xAxisScale = d3.axisBottom()
+                        .scale(x);
+                me.yAxisScale = yAxisScale = d3.axisLeft()
+                        .scale(y);
+                me.xAxis.attr("transform", "translate(0," + height + ")")
+                        .attr("width", width);
+                me.yAxis.attr("height", height);
+                me.parrentsvg = parrentsvg.attr("width", width + margin.left + margin.right)
+                        .attr("height", height + margin.top + margin.bottom);
+                me.svg = svg.attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+        },
+        redraw: function (data) {
+                var me = this;
+                if (!me.drawedChart) {
+                        return false;
+                }
+                var parseDate = d3.timeParse("%d-%b-%y");
+
+                me.resizeChart();
+                data = data || undefined;
+                var dataPath = Ext.getResourcePath('data-simple.csv', null, 'data');
+                var svg = svg || me.svg,
+                        candlestick = candlestick || me.candlestick,
+                        x = x || me.x,
+                        y = y || me.y,
+                        xAxisScale = xAxisScale || me.xAxisScale,
+                        yAxisScale = yAxisScale || me.yAxisScale;
+                d3.csv(dataPath, function (error, data) {
+                        var accessor = candlestick.accessor();
+                        data = data.slice(0, 200).map(function (d) {
+                                return {
+                                        date: parseDate(d.Date),
+                                        open: +d.Open,
+                                        high: +d.High,
+                                        low: +d.Low,
+                                        close: +d.Close,
+                                        volume: +d.Volume
+                                };
+                        }).sort(function (a, b) { return d3.ascending(accessor.d(a), accessor.d(b)); });
+
+
+
+
+                        me.draw(svg, candlestick, x, y, xAxisScale, yAxisScale, data);
+                });
+
+        }
+});

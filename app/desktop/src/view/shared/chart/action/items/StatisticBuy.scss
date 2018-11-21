@@ -1,0 +1,53 @@
+$statistic-icon-size: dynamic(24px);
+$statistic-line-height: dynamic(24px);
+$statistic-icon-size-big: dynamic(20px);
+$statistic-line-height-big: dynamic(18px);
+.x-statistic {
+    .statistic {
+        line-height: $statistic-line-height;
+        &.buy, &.sell {
+            font-size: 12px;
+        }
+
+        &.buy {
+            color: $buy-color;
+            .x-font-icon {
+                font-weight: bold;
+                font-size: $statistic-icon-size;
+            }
+        }
+        &.sell {
+            color: $sell-color;
+            .x-font-icon {
+                font-weight: bold;
+                font-size: $statistic-icon-size;
+            }
+        }
+    }
+}
+
+.#{$prefix}big {
+    .x-statistic {
+        .statistic {
+            line-height: $statistic-line-height-big;
+            &.buy, &.sell {
+                font-size: 12px;
+            }
+    
+            &.buy {
+                color: $buy-color;
+                .x-font-icon {
+                    font-weight: bold;
+                    font-size: $statistic-icon-size-big;
+                }
+            }
+            &.sell {
+                color: $sell-color;
+                .x-font-icon {
+                    font-weight: bold;
+                    font-size: $statistic-icon-size-big;
+                }
+            }
+        }
+    }
+}
