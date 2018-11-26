@@ -5,11 +5,17 @@
  $enable-font-awesome: dynamic(true);
 
  // shared variables
- $sell-color: dynamic(#f5534c);
- $buy-color: dynamic(#1EA530);
- $buy-color: dynamic(#1EA530);
- $basic-color: dynamic(transparentize(#fff, 0.9));
- $warning-color: dynamic(#F8B506);
+ $sell-color: dynamic(#E42620);
+ $sell-color-darker: dynamic(#9F1A16);
+ $buy-color: dynamic(#2CA737);
+ $buy-color-darker: dynamic(#0E602C);
+ $light-color: dynamic(#fff);
+
+ $button-base-font-size: dynamic(17px);
+ $warning-color: dynamic(#F8B308);
+ $basic-color: dynamic(#35394F);
+ $previous-color: dynamic(#181F7A);
+ $next-color: dynamic(transparentize(#181F30, 0.5));
  $dark-mode: dynamic(true);
  // shared styling
  
@@ -23,18 +29,18 @@
  // end toolbar
  
  // button
- $scpf-button-icon-only-font-size: dynamic(32px);
- $scpf-button-icon-only-icon-size: dynamic(32px);
+ $scpf-button-icon-only-font-size: dynamic(38px);
+ $scpf-button-icon-only-icon-size: dynamic(38px);
  $scpf-button-icon-only-padding: dynamic(0px);
  $scpf-button-basic-background-color: dynamic($basic-color);
  $scpf-button-warning-background-color: dynamic($warning-color);
  $scpf-button-border-radius: dynamic(8px);
  
- $scpf-button-segmentation-background-color: dynamic($basic-color);
- $scpf-button-segmentation-font-size-big: dynamic(50px);
- $scpf-button-segmentation-icon-size-big: dynamic(50px);
- $scpf-button-segmentation-padding-big: dynamic(18px);
- $scpf-button-segmentation-padding-big-big: dynamic(18px);
+ $scpf-button-segmentation-background-color: dynamic(#35394F);
+ $scpf-button-segmentation-font-size-big: dynamic(37px);
+ $scpf-button-segmentation-icon-size-big: dynamic(70px);
+ $scpf-button-segmentation-padding-big: dynamic(0px);
+ $scpf-button-segmentation-padding-big-big: dynamic(14px);
  $scpf-button-segmentation-border-radius: dynamic(14px);
  
  $scpf-button-font-size-big: dynamic(32px);
@@ -65,6 +71,8 @@
  
  @include button-ui(
      $ui: 'scpf-basic',
+     $color: $light-color,
+     $font-size:  $button-base-font-size,
      $background-color: $scpf-button-basic-background-color,
      $hovered-background-color: darken($scpf-button-basic-background-color, 5%),
      $pressed-background-color: darken($scpf-button-basic-background-color, 10%),
@@ -72,11 +80,12 @@
      $pressed-hovered-background-color: darken($scpf-button-basic-background-color, 10%),
      $focused-hovered-background-color: darken($scpf-button-basic-background-color, 10%),
      $border-radius: $scpf-button-border-radius,
-     $border-radius-big: $scpf-button-border-radius,
-     $color: $neutral-light-color
+     $border-radius-big: $scpf-button-border-radius
  );
  @include button-ui(
      $ui: 'scpf-warning',
+     $color: $light-color,
+     $font-size:  $button-base-font-size,
      $background-color: $scpf-button-warning-background-color,
      $hovered-background-color: darken($scpf-button-warning-background-color, 5%),
      $pressed-background-color: darken($scpf-button-warning-background-color, 10%),
@@ -86,17 +95,59 @@
      $border-radius: $scpf-button-border-radius,
      $border-radius-big: $scpf-button-border-radius
  );
+
+ $test-color: linear-gradient($buy-color, $buy-color-darker);
  @include button-ui(
      $ui: 'scpf-primary',
-     $background-color: $buy-color,
+     /* $background-color:   $test-color,
      $hovered-background-color: darken($buy-color, 5%),
      $pressed-background-color: darken($buy-color, 10%),
      $focused-background-color: darken($buy-color, 10%),
      $pressed-hovered-background-color: darken($buy-color, 10%),
-     $focused-hovered-background-color: darken($buy-color, 10%),
+     $focused-hovered-background-color: darken($buy-color, 10%), */
+     $color: $light-color,
+     $hovered-color: $light-color,
+     $pressed-color: $light-color,
+     $focused-color: $light-color,
+     $icon-color: $light-color,
+     $hovered-icon-color: $light-color,
+     $pressed-icon-color: $light-color,
+     $focused-icon-color: $light-color,
+     
      $border-radius: $scpf-button-border-radius,
      $border-radius-big: $scpf-button-border-radius
  );
+ @include button-ui(
+     $ui: 'scpf-buy',
+     $background-gradient: color-stops($buy-color, $buy-color-darker),
+     $hovered-background-gradient: color-stops($buy-color, $buy-color-darker),
+     $pressed-background-gradient: color-stops($buy-color, $buy-color-darker),
+     $pressed-hovered-background-gradient: color-stops($buy-color, $buy-color-darker),
+     $focused-background-gradient: color-stops($buy-color, $buy-color-darker),
+     $focused-hovered-background-gradient: color-stops($buy-color, $buy-color-darker)
+ );
+ @include button-ui(
+    $ui: 'scpf-sell',
+    $background-gradient: color-stops($sell-color, $sell-color-darker),
+    $hovered-background-gradient: color-stops($sell-color, $sell-color-darker),
+    $pressed-background-gradient: color-stops($sell-color, $sell-color-darker),
+    $pressed-hovered-background-gradient: color-stops($sell-color, $sell-color-darker),
+    $focused-background-gradient: color-stops($sell-color, $sell-color-darker),
+    $focused-hovered-background-gradient: color-stops($sell-color, $sell-color-darker)
+);
+
+ @include button-ui(
+    $ui: 'scpf-big',
+    $font-size: $scpf-button-font-size-big,
+    $icon-size: $scpf-button-icon-size-big,
+    $icon-size-big: $scpf-button-icon-size-big-big,
+    $line-height: $scpf-button-icon-size-big,
+    $padding: $scpf-button-padding-big,
+    $icon-only-padding: $scpf-button-padding-big,
+    $border-radius: $scpf-button-border-radius-big,
+    $border-radius-big: $scpf-button-border-radius-big
+);
+
  @include button-ui(
      $ui: 'scpf-error',
      $background-color: $sell-color,
@@ -129,19 +180,6 @@
  );
  
  @include button-ui(
-     $ui: 'scpf-big',
-     $font-size: $scpf-button-font-size-big,
-     $icon-size: $scpf-button-icon-size-big,
-     $icon-size-big: $scpf-button-icon-size-big-big,
-     $line-height: $scpf-button-icon-size-big,
-     $padding: $scpf-button-padding-big,
-     $icon-only-padding: $scpf-button-padding-big,
-     $border-radius: $scpf-button-border-radius-big,
-     $border-radius-big: $scpf-button-border-radius-big
- );
- 
- 
- @include button-ui(
      $ui: 'scpf-chart',
      $font-size: $button-scpf-chart-font-size,
      $icon-size: $button-scpf-chart-icon-size,
@@ -149,6 +187,48 @@
      $padding: 0px,
      $border-radius: 8px
  );
+
+ .trending-up {
+    background-image: url(get-resource-path("buynow-3x.png", null, "icon"));
+ }
+
+ .trending-down {
+    background-image: url(get-resource-path("sellnow-3x.png", null, "icon"));
+ }
+ .thin-left {
+    background-image: url(get-resource-path("back-3x.png", null, "icon"));
+ }
+
+ .thin-right {
+    background-image: url(get-resource-path("next-3x.png", null, "icon"));
+ }
+
+ .navigation-menu {
+    background-image: url(get-resource-path("menu01-3x.png", null, "icon"));
+ }
+
+ .#{$prefix}button-scpf-icononly {
+     .#{$prefix}inner-el {
+         padding: 0px !important;
+     }
+ }
+ .navigation-menu {
+    background-image: url(get-resource-path("menu01-3x.png", null, "icon"));
+    width: 42px !important;
+    height: 32px !important;
+    background-position: center !important;
+    background-size: cover !important;
+    line-height: 32px;
+    margin-top: 12px;
+ }
+
+ .logout-menu {
+    background-image: url(get-resource-path("menu02-3x.png", null, "icon"));
+    width: 42px !important;
+    height: 42px !important;
+    background-position: center !important;
+    background-size: cover !important;
+ }
  // end button
  
  // menu
@@ -159,7 +239,7 @@
  // end menu
  
  // toolbar
- $toolbar-scpf-padding: dynamic(8px 16px);
+ $toolbar-scpf-padding: dynamic(0px 16px);
  $toolbar-scpf-padding-big: dynamic(0px);
  $toolbar-scpf-min-height: dynamic(64px);
  $toolbar-scpf-min-height-big: dynamic(48px);

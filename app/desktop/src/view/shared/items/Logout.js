@@ -1,6 +1,6 @@
 Ext.define('Bidmo.view.shared.items.Logout', {
     extend: 'Ext.Button',
     xtype: 'logout',
-    iconCls: 'icofont-bubble-down',
+    iconCls: 'logout-menu',
     ui: 'scpf-icononly'
 });

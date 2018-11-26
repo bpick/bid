@@ -10,11 +10,13 @@ Ext.define('Bidmo.view.desktop.home.Home', {
         },
         items: [{
             xtype: 'profile',
+            margin: 0,
             bind: {
                 hidden: '{authenticated}'
             }
         },{
             xtype: 'profile',
+            margin: 0,
             arrow: false,
             menu: {
                 anchor: true,
@@ -240,12 +242,12 @@ Ext.define('Bidmo.view.desktop.home.Home', {
                     flex: 0
                 },
                 items: [{
-                    iconCls: 'icofont-thin-left'
+                    iconCls: 'thin-left'
                 }, {
                     text: "50",
                     flex: 1
                 }, {
-                    iconCls: 'icofont-thin-right'
+                    iconCls: 'thin-right'
                 }]
             }, {
                 xtype: 'buynow',
